@@ -1,3 +1,3 @@
-module github.com/zeebo/wyhash
+module github.com/MeteorsLiu/wyhash
 
 go 1.13
