@@ -65,3 +65,33 @@ again:
 	}
 	return
 }
+
+func (r *SRNG) ReadN(b []byte, min, max int) {
+	width := byte(max - min)
+	minN := byte(min)
+	var pr uint64
+	shift := 0
+	for i := 0; i < len(b); i++ {
+		if shift == 0 {
+			pr = r.Uint64()
+			shift = 7
+		}
+		b[i] = byte(pr)%width + minN
+		pr >>= 8
+		shift--
+	}
+}
+
+func (r *SRNG) Read(b []byte) {
+	var pr uint64
+	shift := 0
+	for i := 0; i < len(b); i++ {
+		if shift == 0 {
+			pr = r.Uint64()
+			shift = 7
+		}
+		b[i] = byte(pr)
+		pr >>= 8
+		shift--
+	}
+}

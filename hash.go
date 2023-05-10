@@ -1,6 +1,7 @@
 package wyhash
 
 import (
+	"crypto/rand"
 	"encoding/binary"
 	"math/bits"
 	"unsafe"
@@ -14,9 +15,19 @@ type (
 	u64 = uint64
 )
 
+var (
+	_wyp0 uint64
+	_wyp1 uint64
+)
+
+func init() {
+	p, _ := rand.Prime(rand.Reader, 64)
+	_wyp0 = p.Uint64()
+	p, _ = rand.Prime(rand.Reader, 64)
+	_wyp1 = p.Uint64()
+}
+
 const (
-	_wyp0 = 0xa0761d6478bd642f
-	_wyp1 = 0xe7037ed1a0b428db
 	_wyp2 = 0x8ebc6af09c88c6e3
 	_wyp3 = 0x589965cc75374cc3
 	_wyp4 = 0x1d8e4e27c47d124f

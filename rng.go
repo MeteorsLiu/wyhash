@@ -24,7 +24,7 @@ func (r *RNG) Intn(n int) int {
 // Uint64 returns a random uint64.
 // Not safe for concurrent callers.
 func (r *RNG) Uint64() uint64 {
-	*r += _wyp0
+	*r += RNG(_wyp0)
 	return _wymum(u64(*r)^_wyp1, u64(*r))
 }
 

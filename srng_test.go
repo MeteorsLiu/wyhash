@@ -1,9 +1,49 @@
 package wyhash
 
 import (
+	"math/rand"
 	"runtime"
 	"testing"
+	"time"
 )
+
+func TestOne(t *testing.T) {
+	rng := SRNG(time.Now().UnixNano())
+	t.Log(_wyp0, _wyp1)
+	t.Log(rng.Uint64())
+	t.Log(rng.Uint64())
+	t.Log(rng.Uint64())
+
+	b := make([]byte, 64)
+	rng.ReadN(b, 32, 126)
+	t.Log(b)
+}
+
+func BenchmarkRead(b *testing.B) {
+	rng := SRNG(time.Now().UnixNano())
+	bf := make([]byte, 64)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		rng.Read(bf)
+	}
+}
+
+func BenchmarkReadN(b *testing.B) {
+	rng := SRNG(time.Now().UnixNano())
+	bf := make([]byte, 64)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		rng.ReadN(bf, 32, 126)
+	}
+}
+
+func BenchmarkReadGo(b *testing.B) {
+	bf := make([]byte, 64)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		rand.Read(bf)
+	}
+}
 
 func TestSRng(t *testing.T) {
 	var rng SRNG
