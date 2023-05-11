@@ -16,7 +16,7 @@ func TestOne(t *testing.T) {
 	t.Log(rng.Uint64())
 
 	b := make([]byte, 64)
-	rng.ReadN(b, 32, 48)
+	rng.ReadN(b, 32, 126)
 	t.Log(string(b))
 	rng.Read(b)
 	t.Log(b)
