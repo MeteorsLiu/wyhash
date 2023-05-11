@@ -52,3 +52,17 @@ func Float64() float64 {
 	global.Unlock()
 	return out
 }
+
+func Read(b []byte) int {
+	global.Lock()
+	n := global.Read(b)
+	global.Unlock()
+	return n
+}
+
+func ReadN(b []byte, min, max int) int {
+	global.Lock()
+	n := global.ReadN(b, min, max)
+	global.Unlock()
+	return n
+}

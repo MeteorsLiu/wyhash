@@ -63,6 +63,19 @@ func BenchmarkReadConcurrent(b *testing.B) {
 	wg.Wait()
 }
 
+func BenchmarkReadConcurrentMutex(b *testing.B) {
+	var wg sync.WaitGroup
+	wg.Add(b.N)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		go func() {
+			defer wg.Done()
+			bf := make([]byte, 32)
+			Read(bf)
+		}()
+	}
+	wg.Wait()
+}
 func BenchmarkReadConcurrentGo(b *testing.B) {
 	var wg sync.WaitGroup
 	wg.Add(b.N)

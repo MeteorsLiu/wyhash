@@ -69,14 +69,14 @@ again:
 	return
 }
 
-func (r *RNG) ReadN(b []byte, min, max int) {
+func (r *RNG) ReadN(b []byte, min, max int) (i int) {
 	width := byte(max - min)
 	minN := byte(min)
 	isPowerofTwo := width&(width-1) == 0
 	var pr uint64
 	var each byte
 	shift := 0
-	for i := 0; i < len(b); i++ {
+	for i = 0; i < len(b); i++ {
 		if shift == 0 {
 			pr = r.Uint64()
 			shift = 7
@@ -91,12 +91,13 @@ func (r *RNG) ReadN(b []byte, min, max int) {
 		pr >>= 8
 		shift--
 	}
+	return
 }
 
-func (r *RNG) Read(b []byte) {
+func (r *RNG) Read(b []byte) (i int) {
 	var pr uint64
 	shift := 0
-	for i := 0; i < len(b); i++ {
+	for i = 0; i < len(b); i++ {
 		if shift == 0 {
 			pr = r.Uint64()
 			shift = 7
@@ -105,4 +106,5 @@ func (r *RNG) Read(b []byte) {
 		pr >>= 8
 		shift--
 	}
+	return
 }
