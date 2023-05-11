@@ -83,7 +83,8 @@ func (r *SRNG) ReadN(b []byte, min, max int) {
 			each &= (width - 1)
 			each += minN
 		} else {
-			each = byte(pr)%width + minN
+			each %= width
+			each += minN
 		}
 		b[i] = each
 		pr >>= 8

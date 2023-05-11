@@ -16,7 +16,9 @@ func TestOne(t *testing.T) {
 	t.Log(rng.Uint64())
 
 	b := make([]byte, 64)
-	rng.ReadN(b, 32, 126)
+	rng.ReadN(b, 32, 48)
+	t.Log(string(b))
+	rng.Read(b)
 	t.Log(b)
 }
 
@@ -34,7 +36,7 @@ func BenchmarkReadN(b *testing.B) {
 	bf := make([]byte, 64)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		rng.ReadN(bf, 32, 48)
+		rng.ReadN(bf, 32, 126)
 	}
 }
 
