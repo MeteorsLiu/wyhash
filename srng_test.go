@@ -48,6 +48,14 @@ func BenchmarkReadGo(b *testing.B) {
 	}
 }
 
+func BenchmarkReadRNG(b *testing.B) {
+	rng := RNG(time.Now().UnixNano())
+	bf := make([]byte, 64)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		rng.Read(bf)
+	}
+}
 func BenchmarkReadConcurrent(b *testing.B) {
 	rng := SRNG(time.Now().UnixNano())
 	var wg sync.WaitGroup

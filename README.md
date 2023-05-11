@@ -37,6 +37,40 @@ Run on my `i7-6700K CPU @ 4.00GHz`
 |` Uint64n(small) ` |` 2.43 ns/op ` |
 |` Float64 `        |` 2.17 ns/op ` |
 
+# SRNG Benchmarks
+
+| Method            | Speed         |
+|-------------------|---------------|
+|` Uint64 `         |` 12.11 ns/op ` |
+|` Uint64n(large) ` |` 35.72 ns/op ` |
+|` Uint64n(med) `   |` 14.10 ns/op ` |
+|` Uint64n(small) ` |` 14.06 ns/op ` |
+|` Float64 `        |` 16.75 ns/op ` |
+
+# RNG with Mutex Benchmarks
+
+| Method            | Speed         |
+|-------------------|---------------|
+|` Uint64 `         |` 15.69 ns/op ` |
+|` Uint64n(large) ` |` 21.07 ns/op ` |
+|` Uint64n(med) `   |` 15.64 ns/op ` |
+|` Uint64n(small) ` |` 15.68 ns/op ` |
+|` Float64 `        |` 15.74 ns/op ` |
+
+# Read Concurrently(64 Bytes)
+| Method            | Speed         |
+|-------------------|---------------|
+|` Go Math/rand Read `         |` 493.4 ns/op ` |
+|` RNG With Mutex Read `       |` 337.1 ns/op ` |
+|` SRNG Read `                 |` 294.6 ns/op ` |
+
+# Read No Race (64 Bytes)
+| Method            | Speed         |
+|-------------------|---------------|
+|` Go Math/rand Read `         |` 76.71 ns/op ` |
+|` RNG Read `                  |` 32.39 ns/op ` |
+|` SRNG Read `                 |` 79.68 ns/op ` |
+
 # Usage
 
 #### func  Float64
