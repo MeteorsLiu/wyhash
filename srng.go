@@ -81,12 +81,10 @@ func (r *SRNG) ReadN(b []byte, min, max int) {
 		each = byte(pr)
 		if isPowerofTwo {
 			each &= (width - 1)
-			each += minN
 		} else {
 			each %= width
-			each += minN
 		}
-		b[i] = each
+		b[i] = each + minN
 		pr >>= 8
 		shift--
 	}
