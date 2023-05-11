@@ -3,6 +3,7 @@ package wyhash
 import (
 	"math/rand"
 	"runtime"
+	"sync"
 	"testing"
 	"time"
 )
@@ -33,7 +34,7 @@ func BenchmarkReadN(b *testing.B) {
 	bf := make([]byte, 64)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		rng.ReadN(bf, 32, 126)
+		rng.ReadN(bf, 32, 48)
 	}
 }
 
@@ -43,6 +44,35 @@ func BenchmarkReadGo(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		rand.Read(bf)
 	}
+}
+
+func BenchmarkReadConcurrent(b *testing.B) {
+	rng := SRNG(time.Now().UnixNano())
+	var wg sync.WaitGroup
+	wg.Add(b.N)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		go func() {
+			defer wg.Done()
+			bf := make([]byte, 32)
+			rng.Read(bf)
+		}()
+	}
+	wg.Wait()
+}
+
+func BenchmarkReadConcurrentGo(b *testing.B) {
+	var wg sync.WaitGroup
+	wg.Add(b.N)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		go func() {
+			defer wg.Done()
+			bf := make([]byte, 32)
+			rand.Read(bf)
+		}()
+	}
+	wg.Wait()
 }
 
 func TestSRng(t *testing.T) {
